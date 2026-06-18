@@ -1,0 +1,37 @@
+{
+  "lastUpdated": "2026-06-18",
+  "announcements": [
+    {
+      "id": "2026-06-18-rin-cfr-live",
+      "date": "2026-06-18",
+      "type": "game",
+      "title": "Rin Shinonome (Cross-Forged Refinement) & Chester Lochburn Pickup Gachas Live",
+      "summary": "Both pickup banners are live now through June 30, 2026 (22:59 UTC-04:00).",
+      "link": "../characters/rin-shinonome-cfr/"
+    },
+    {
+      "id": "2026-06-17-narumi-jsc-up",
+      "date": "2026-06-17",
+      "type": "site",
+      "title": "Gen Narumi (Japan's Strongest Combatant) Unlocked Potential Added",
+      "summary": "Full UP1–UP5 data added to her character page, plus a new Unlocked Potential hub under Game Guide.",
+      "link": "../characters/gen-narumi-jsc/"
+    },
+    {
+      "id": "2026-06-16-sagan-rc-announced",
+      "date": "2026-06-16",
+      "type": "game",
+      "title": "New Character Announced: Sagan Shinomiya (The Resurgent Commander)",
+      "summary": "Coming June 20. A placeholder profile page is live and will be filled in once her kit releases.",
+      "link": "../characters/sagan-shinomiya-rc/"
+    },
+    {
+      "id": "2026-06-15-tierlist-launch",
+      "date": "2026-06-15",
+      "type": "site",
+      "title": "Tier List Maker Launched",
+      "summary": "Build and export your own custom tier list with drag-and-drop, full color/label customization, and image export.",
+      "link": "../tierlist/"
+    }
+  ]
+}

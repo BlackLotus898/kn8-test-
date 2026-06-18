@@ -82,6 +82,7 @@
       <li><a href="${base}combat/uniparts/">Uniparts &amp; Set Effects</a></li>
     </ul>
   </li>
+  <a href="${base}announcements/">Announcements</a>
   <a href="${base}socials/">Socials</a>
   <a href="${base}feedback/">Feedback</a>
 </ul>`;
