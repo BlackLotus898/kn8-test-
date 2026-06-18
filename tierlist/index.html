@@ -219,7 +219,8 @@ function getPlacedIds() {
   return placed;
 }
 
-function charChipHTML(char, draggable) {
+function charChipHTML(char) {
+  const draggable = isTouchDevice ? 'false' : 'true';
   return `<div class="char-chip" draggable="${draggable}" data-char-id="${char.id}">
     <div class="char-chip-photo"><img src="${IMG}${char.img}" alt="${char.name}" loading="lazy"></div>
     <div class="char-chip-name">${char.name}${char.variant ? ' ('+char.variant+')' : ''}</div>
@@ -231,7 +232,7 @@ function renderBoard() {
   board.innerHTML = state.tiers.map(tier => {
     const chars = tier.charIds.map(getCharById).filter(Boolean);
     const chipsHTML = chars.length
-      ? chars.map(c => charChipHTML(c, true)).join('')
+      ? chars.map(c => charChipHTML(c)).join('')
       : `<span class="empty-tier-msg">Drop characters here</span>`;
     return `
     <div class="tier-row" data-tier-id="${tier.id}">
@@ -281,7 +282,7 @@ function renderPool() {
     grid.innerHTML = `<div class="pool-empty-msg">// NO CHARACTERS MATCH — all placed or filtered out</div>`;
     return;
   }
-  grid.innerHTML = pool.map(c => charChipHTML(c, true)).join('');
+  grid.innerHTML = pool.map(c => charChipHTML(c)).join('');
   attachPoolDragEvents();
 }
 
