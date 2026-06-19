@@ -25,6 +25,10 @@
   .ann-card.type-game::before { background: var(--cyan); }
   .ann-card.type-site::before { background: var(--gold); }
   .ann-card:hover { border-color: var(--text); }
+  .ann-card-layout { display: flex; gap: 1.2rem; align-items: flex-start; }
+  .ann-card-img { width: 140px; height: 90px; object-fit: cover; flex-shrink: 0; background: var(--dark); border: 1px solid var(--border); }
+  .ann-card-body { flex: 1; min-width: 0; }
+  @media (max-width: 560px) { .ann-card-layout { flex-direction: column; } .ann-card-img { width: 100%; height: 160px; } }
   .ann-meta { display: flex; align-items: center; gap: .7rem; margin-bottom: .5rem; }
   .ann-date { font-family: 'Share Tech Mono', monospace; font-size: .68rem; letter-spacing: 1px; color: var(--muted); }
   .ann-tag { font-family: 'Share Tech Mono', monospace; font-size: .6rem; letter-spacing: 1px; text-transform: uppercase; padding: .15rem .5rem; border: 1px solid; }
@@ -92,13 +96,18 @@ function render() {
   }
 
   list.innerHTML = filtered.map(a => `
-    <a href="${a.link || '#'}" class="ann-card type-${a.type}">
-      <div class="ann-meta">
-        <span class="ann-date">${formatDate(a.date)}</span>
-        <span class="ann-tag type-${a.type}">${a.type === 'game' ? 'Game News' : 'Site Update'}</span>
+    <a href="${a.link || '#'}" class="ann-card type-${a.type}" target="${a.autoAdded ? '_blank' : '_self'}">
+      <div class="ann-card-layout">
+        ${a.image ? `<img class="ann-card-img" src="${a.image}" alt="" loading="lazy" onerror="this.remove()">` : ''}
+        <div class="ann-card-body">
+          <div class="ann-meta">
+            <span class="ann-date">${formatDate(a.date)}</span>
+            <span class="ann-tag type-${a.type}">${a.type === 'game' ? 'Game News' : 'Site Update'}</span>
+          </div>
+          <div class="ann-title">${a.title}</div>
+          <p class="ann-summary">${a.summary}</p>
+        </div>
       </div>
-      <div class="ann-title">${a.title}</div>
-      <p class="ann-summary">${a.summary}</p>
     </a>
   `).join('');
 }

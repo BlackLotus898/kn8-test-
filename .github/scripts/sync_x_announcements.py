@@ -98,6 +98,44 @@ def slugify_id(date_str, title):
     return f"{date_str}-x-{slug}"
 
 
+def extract_image_url(entry):
+    """
+    Try several common places an RSS/Nitter entry might carry a post image:
+    - media_content / media_thumbnail (standard RSS media extensions)
+    - an <img> tag embedded directly in the summary/description HTML
+    Returns None if nothing usable is found.
+    """
+    # Standard media RSS fields, when the bridge provides them
+    media_content = entry.get("media_content")
+    if media_content:
+        url = media_content[0].get("url")
+        if url:
+            return url
+
+    media_thumbnail = entry.get("media_thumbnail")
+    if media_thumbnail:
+        url = media_thumbnail[0].get("url")
+        if url:
+            return url
+
+    # Nitter commonly embeds the image as an <img src="..."> inside the
+    # summary HTML instead of a dedicated media field.
+    summary_html = entry.get("summary", "")
+    match = re.search(r'<img[^>]+src="([^"]+)"', summary_html)
+    if match:
+        return match.group(1)
+
+    return None
+
+
+def clean_html_summary(raw_html):
+    """Strip HTML tags down to plain text for the summary field, so the
+    site doesn't render raw <a>/<img> markup inside the card/list text."""
+    text = re.sub(r"<[^>]+>", " ", raw_html)
+    text = re.sub(r"\s+", " ", text).strip()
+    return text
+
+
 def main():
     feed = fetch_feed()
     if feed is None:
@@ -129,7 +167,9 @@ def main():
 
         # Trim to a reasonable headline length; full text stays in summary
         title = raw_title if len(raw_title) <= 90 else raw_title[:87] + "..."
-        summary = entry.get("summary", raw_title).strip()
+        raw_summary = entry.get("summary", raw_title)
+        summary = clean_html_summary(raw_summary)
+        image_url = extract_image_url(entry)
 
         new_entry = {
             "id": slugify_id(date_str, raw_title),
@@ -141,6 +181,8 @@ def main():
             "sourceLink": link,
             "autoAdded": True,
         }
+        if image_url:
+            new_entry["image"] = image_url
 
         data["announcements"].append(new_entry)
         existing_links.add(link)

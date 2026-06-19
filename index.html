@@ -373,6 +373,7 @@
   .news-card:hover { border-color: var(--text); }
   .news-card-date { font-family: 'Share Tech Mono', monospace; font-size: .62rem; letter-spacing: 1px; color: var(--muted); margin-bottom: .5rem; display: block; }
   .news-card-title { font-family: 'Bebas Neue', sans-serif; font-size: 1.1rem; letter-spacing: .5px; color: #fff; line-height: 1.2; }
+  .news-card-img { width: 100%; aspect-ratio: 16/9; object-fit: cover; display: block; margin-bottom: .7rem; background: var(--dark); border: 1px solid var(--border); }
 </style>
 </head>
 <body>
@@ -582,7 +583,8 @@ function renderNewsGrid(items) {
     return;
   }
   grid.innerHTML = top3.map(a => `
-    <a href="${a.link || 'announcements/'}" class="news-card type-${a.type}">
+    <a href="${a.link || 'announcements/'}" class="news-card type-${a.type}" target="${a.autoAdded ? '_blank' : '_self'}">
+      ${a.image ? `<img class="news-card-img" src="${a.image}" alt="" loading="lazy" onerror="this.remove()">` : ''}
       <span class="news-card-date">${formatDate(a.date)} &nbsp;·&nbsp; ${a.type === 'game' ? 'GAME NEWS' : 'SITE UPDATE'}</span>
       <div class="news-card-title">${a.title}</div>
     </a>

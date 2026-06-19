@@ -93,6 +93,7 @@ def fetch_recent_posts():
             "shortcode": shortcode,
             "link": f"https://www.instagram.com/p/{shortcode}/",
             "timestamp": timestamp,
+            "image": node.get("display_url"),
         })
     return posts
 
@@ -154,6 +155,8 @@ def main():
             "source": "instagram",
             "autoAdded": True,
         }
+        if post.get("image"):
+            new_entry["image"] = post["image"]
 
         data["announcements"].append(new_entry)
         existing_links.add(post["link"])
